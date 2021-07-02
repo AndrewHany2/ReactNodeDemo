@@ -2,6 +2,8 @@ const userRouter = require("express").Router();
 const User = require("../models/userModel");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
+const rimraf = require("rimraf");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -60,6 +62,12 @@ userRouter.get("/", async (req, res) => {
 
 userRouter.delete("/:id", async (req, res) => {
   const id = req.params.id;
+  const user = await User.findOne({ _id: id });
+  try {
+    fs.unlinkSync(user.userImage);
+  } catch (err) {
+    console.error(err);
+  }
   User.deleteOne({ _id: id })
     .then((result) => {
       res.status(200).json({ result: result });
