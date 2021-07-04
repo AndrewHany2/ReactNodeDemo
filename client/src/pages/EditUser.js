@@ -133,7 +133,7 @@ function EditUSer({ history }) {
                   objectFit: "cover",
                   objectPosition: "50% 0%",
                 }}
-                src={`http://localhost:8000/${userDetails.details.userImage}`}
+                src={`./../../${userDetails.details.userImage}`}
                 alt="as"
               />
             </div>
